@@ -1,33 +1,4 @@
-renderedCallback() {
-    if (this.isVerifiedQuestionsAvailable) {
-
-        const userInputs = this.template.querySelectorAll('[data-type="user-input"]');
-
-        if (userInputs && userInputs.length > 0) {
-            // Focus first question only
-            userInputs[0].focus();
-        }
-
-        this.isVerifiedQuestionsAvailable = false;
-    }
-}
-
-
-
-
-renderedCallback() {
-    if (this.isVerifiedQuestionsAvailable) {
-
-        const userInputs = this.template.querySelectorAll('[data-type="user-input"]');
-
-        if (userInputs && userInputs.length > 0) {
-            // Focus first question only
-            userInputs[0].focus();
-        }
-
-        this.isVerifiedQuestionsAvailable = false;
-    }
-}
+<template>
 
 <template if:true={modalisopen}>
 
@@ -47,17 +18,16 @@ renderedCallback() {
          tabindex="-1"
          aria-labelledby="modal-heading-01"
          aria-modal="true"
+         aria-describedby="modal-content-id-1"
          class="slds-modal slds-fade-in-open">
 
 <div data-id="modal_container" class="slds-modal__container">
 
 <div class="slds-modal__header slds-card mainheader">
-
 <h1 id="modal-heading-01"
     class="slds-text-heading_medium slds-hyphenate">
     Locate Customer
 </h1>
-
 </div>
 
 <div class="slds-modal__content spinnerPosition"
@@ -80,24 +50,12 @@ renderedCallback() {
 </template>
 
 <template if:false={agentLandingButton}>
-
 <template if:true={resultData.questions}>
 
-<!-- Intent -->
-<template if:true={intentvisibility}>
-    <div class="containterInt">
-        <label>Call Intent: </label>
-        <label>{callintentvalue}</label>
-    </div>
-    <br />
-</template>
-
-<!-- QUESTIONS LOOP -->
-<template for:each={resultData.questions} for:item="q" for:index="index">
+<!-- QUESTIONS -->
+<template for:each={resultData.questions} for:item="q">
 
 <div key={q.id}>
-
-<div style="display: flex;">
 
 <label class="slds-form-element_label bold-label"
        id={q.id}>
@@ -105,14 +63,10 @@ renderedCallback() {
        <span style="color: red;">*</span>
 </label>
 
-</div>
-
 <lightning-input
     type={q.type}
-    date-style="short"
     name={q.id}
     required
-    autocomplete="off"
     variant="label-hidden"
     maxlength={q.maxlength}
     onchange={handleValidations}
@@ -143,10 +97,10 @@ renderedCallback() {
 </template>
 
 </template>
+</template>
 
 <!-- DATATABLE -->
 <template if:true={isCustomersFound}>
-
 <div class="slds-scrollable_x slds-scrollable_y scroller-custom slds-box slds-box_xx-small"
      id="modal-datatable-01"
      style="height: 300px;">
@@ -164,15 +118,13 @@ renderedCallback() {
 </lightning-datatable>
 
 </div>
-
 </template>
 
-<!-- Approve API -->
+<!-- APPROVE -->
 <template if:true={isApproveApi}>
 <div class="slds-box slds-box_small">
 <p aria-live="polite">
-    <lightning-formatted-text value="Approve API is called">
-    </lightning-formatted-text>
+    Approve API is called
 </p>
 </div>
 </template>
@@ -187,7 +139,6 @@ renderedCallback() {
 <template if:true={resultData.questions}>
 
 <template if:true={isDisplayUnidentifiedatn}>
-
 <lightning-button
     label={label.Unidentified_Prospect_Button}
     title={label.Unidentified_Prospect_Button}
@@ -196,7 +147,6 @@ renderedCallback() {
     variant="neutral"
     class="toleftalign slds-m-left_x-small">
 </lightning-button>
-
 </template>
 
 <div class="idnvFooter">
@@ -223,7 +173,6 @@ renderedCallback() {
 <lightning-button
     variant="brand"
     label="Verify"
-    aria-label="Verify"
     onclick={handlesubmit}
     disabled={checkvalidity}>
 </lightning-button>
@@ -242,30 +191,6 @@ renderedCallback() {
 </template>
 
 </div>
-
-</div>
-
-<!-- Workflow -->
-<div data-id="workflowPopup">
-
-<template if:true={showworkflow}>
-
-<lightning-icon
-    alternative-text="Close"
-    icon-name="utility:close"
-    onclick={closeworkflowNav}
-    size="x-medium">
-</lightning-icon>
-
-<c-care_unidentifyworkflow
-    account-info={accountInfo}
-    unidentifyinfo={unidentifyinfo}
-    onclose={closemodalworkflow}
-    ucontactid={ucontactid}
-    idnvobj={idnvobj}>
-</c-care_unidentifyworkflow>
-
-</template>
 
 </div>
 
