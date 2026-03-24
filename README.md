@@ -12,6 +12,23 @@ renderedCallback() {
     }
 }
 
+
+
+
+renderedCallback() {
+    if (this.isVerifiedQuestionsAvailable) {
+
+        const userInputs = this.template.querySelectorAll('[data-type="user-input"]');
+
+        if (userInputs && userInputs.length > 0) {
+            // Focus first question only
+            userInputs[0].focus();
+        }
+
+        this.isVerifiedQuestionsAvailable = false;
+    }
+}
+
 <template if:true={modalisopen}>
 
 <c-care_confirmation-dialog
